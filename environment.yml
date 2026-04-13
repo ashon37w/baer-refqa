@@ -7,3 +7,8 @@ dependencies:
   - pip
   - pip:
     - -e ".[dev]"
+    - torch>=2.0
+    - transformers>=4.40
+    - openai-whisper>=20231117
+    - tqdm>=4.66
+    - python-dotenv>=1.0

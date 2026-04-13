@@ -1,0 +1,166 @@
+{
+  "$defs": {
+    "AuditScores": {
+      "properties": {
+        "asr_loss": {
+          "title": "Asr Loss",
+          "type": "number"
+        },
+        "modality_penalty": {
+          "title": "Modality Penalty",
+          "type": "number"
+        },
+        "incremental_audio_value": {
+          "title": "Incremental Audio Value",
+          "type": "number"
+        },
+        "prosody_sensitivity": {
+          "title": "Prosody Sensitivity",
+          "type": "number"
+        },
+        "classification": {
+          "enum": [
+            "text_sufficient",
+            "audio_helpful_not_essential",
+            "audio_essential",
+            "inconclusive"
+          ],
+          "title": "Classification",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asr_loss",
+        "modality_penalty",
+        "incremental_audio_value",
+        "prosody_sensitivity",
+        "classification"
+      ],
+      "title": "AuditScores",
+      "type": "object"
+    },
+    "GateResult": {
+      "properties": {
+        "lexical_pass": {
+          "default": false,
+          "title": "Lexical Pass",
+          "type": "boolean"
+        },
+        "prosody_pass": {
+          "default": false,
+          "title": "Prosody Pass",
+          "type": "boolean"
+        },
+        "auto_label_pass": {
+          "default": false,
+          "title": "Auto Label Pass",
+          "type": "boolean"
+        },
+        "behavioral_pass": {
+          "default": false,
+          "title": "Behavioral Pass",
+          "type": "boolean"
+        }
+      },
+      "title": "GateResult",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "sample_id": {
+      "title": "Sample Id",
+      "type": "string"
+    },
+    "family_id": {
+      "title": "Family Id",
+      "type": "string"
+    },
+    "track": {
+      "enum": [
+        "track_a_semantic",
+        "track_b_audio"
+      ],
+      "title": "Track",
+      "type": "string"
+    },
+    "task_type": {
+      "enum": [
+        "semantic_counterfactual",
+        "intonation",
+        "emotion",
+        "pragmatic_intent"
+      ],
+      "title": "Task Type",
+      "type": "string"
+    },
+    "question": {
+      "title": "Question",
+      "type": "string"
+    },
+    "answer": {
+      "title": "Answer",
+      "type": "string"
+    },
+    "target_transcript": {
+      "title": "Target Transcript",
+      "type": "string"
+    },
+    "reference_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reference Ids",
+      "type": "array"
+    },
+    "audio_paths": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Audio Paths",
+      "type": "object"
+    },
+    "validity": {
+      "$ref": "#/$defs/GateResult"
+    },
+    "audit": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AuditScores"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "tier": {
+      "anyOf": [
+        {
+          "enum": [
+            "gold",
+            "silver",
+            "bronze",
+            "reject"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Tier"
+    }
+  },
+  "required": [
+    "sample_id",
+    "family_id",
+    "track",
+    "task_type",
+    "question",
+    "answer",
+    "target_transcript"
+  ],
+  "title": "SampleRecord",
+  "type": "object"
+}
